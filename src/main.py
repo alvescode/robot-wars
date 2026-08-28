@@ -1,24 +1,12 @@
 class Robot():
-    def __init__(self):
-        self.name: str
-        self.hp: int
-        self.attack: int
-        self.shield: int
+    def __init__(self, name: str, hp: int, attack: int, shield: int):
+        self.name = name
+        self.hp = hp
+        self.attack = attack
+        self.shield = shield
 
     def __str__(self):
         return f"Name: {self.name}\nHP: {self.hp}\nAttack: {self.attack}\nShield: {self.shield}\n"
-
-    def robotName(self, user_name: str):
-        self.name = user_name
-
-    def robotHp(self, user_hp: int):
-        self.hp = user_hp
-
-    def robotAttack(self, user_attack: str):
-        self.attack = user_attack
-
-    def robotShield(self, user_shield: int):
-        self.shield = user_shield
 
 def main():
     print("---ROBOT WARS---")
@@ -40,20 +28,11 @@ def main():
 
                     match line.split():
                         case ["1"]:
-                            robot = Robot()
-
                             user_name = input("Write robot name: ")
-                            robot.robotName(user_name)
-
-                            user_hp = input("Write robot HP: ")
-                            robot.robotHp(int(user_hp))
-                            
-                            user_attack = input("Write robot attack: ")
-                            robot.robotAttack(int(user_attack))
-
-                            user_shield = input("Write robot shield: ")
-                            robot.robotShield(int(user_shield))
-
+                            user_hp = int(input("Write robot HP: "))
+                            user_attack = int(input("Write robot attack: "))
+                            user_shield = int(input("Write robot shield: "))
+                            robot = Robot(user_name, user_hp, user_attack, user_shield)
                             print("")
                         case ["2"]:
                             print(robot)
