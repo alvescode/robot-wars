@@ -31,11 +31,12 @@ def main():
 
     while running:
         line = input(">")
+        print("")
 
         match line.split():
             case ["1"]:
                 while running:
-                    print("\n[1] create robot")
+                    print("[1] create robot")
                     print("[2] show robot")
                     print("[3] start battle")
                     print("[4] end game\n")
@@ -69,16 +70,22 @@ def main():
 
                         case ["3"]:
                             if len(robots) < 2:
-                                print("You need at least 2 robots to battle\n")
+                                print("\nYou need at least 2 robots to battle\n")
                                 continue
 
                             print("\nSelect your robot: ")
                             player = select_robot(robots)
-                            print(f"You select {player.name}")
+                            print(f"\nYou select {player.name}")
 
                             print("\nSelect your enemy: ")
                             enemy = select_robot(robots)
-                            print(f"The enemy is {enemy.name}")
+
+                            while player == enemy:
+                                print("\nYou can't select you player, please select other robot")
+                                print("\nSelect your enemy: ")
+                                enemy = select_robot(robots)
+
+                            print(f"\nThe enemy is {enemy.name}\n")
 
                         case ["4"]:
                             running = False
