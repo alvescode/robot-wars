@@ -2,31 +2,44 @@ class Robot():
     def __init__(self, name: str, hp: int, attack: int, shield: int):
         self.name = name
         self.hp = hp
-        self.attack = attack
+        self.attack_power = attack
         self.shield = shield
 
     def __str__(self):
-        return f"Name: {self.name}\nHP: {self.hp}\nAttack: {self.attack}\nShield: {self.shield}\n"
+        return f"Name: {self.name}\nHP: {self.hp}\nAttack: {self.attack_power}\nShield: {self.shield}\n"
+
+    def attack(self, enemy):
+        enemy.hp -= self.attack_power
+
+def select_robot(robots):
+    print("\n---ROBOTS---")
+
+    for index, rob in enumerate(robots):
+        print(f"[{index}] {rob.name}")
+
+    line = int(input(">"))
+    return robots[line]
 
 def main():
+    robots = []
+
     print("---ROBOT WARS---")
     print("Welcome to Robot Wars, a simple game based robot battle, but much fun!\n")
     print("[1] start game")
     print("[2] end game\n")
 
     while True:
-        line = input()
-        robots = []
+        line = input(">")
 
         match line.split():
             case ["1"]:
                 while True:
-                    print("[1] create robot")
+                    print("\n[1] create robot")
                     print("[2] show robot")
                     print("[3] start battle")
                     print("[4] end game\n")
 
-                    line = input()
+                    line = input(">")
 
                     match line.split():
                         case ["1"]:
@@ -47,11 +60,24 @@ def main():
                             
                         case ["2"]:
                             if len(robots) == 0:
-                                print("Don't exist robot created!\n")
+                                print("\nDon't exist robot created!\n")
                             else:
-                                print("---ROBOTS---")
+                                print("\n---ROBOTS---")
                                 for rob in robots:
                                     print(rob)
+
+                        case ["3"]:
+                            if len(robots) < 2:
+                                print("You need at least 2 robots to battle\n")
+                                continue
+
+                            print("\nSelect your robot: ")
+                            player = select_robot(robots)
+                            print(f"You select {player.name}")
+
+                            print("\nSelect your enemy: ")
+                            enemy = select_robot(robots)
+                            print(f"The enemy is {enemy.name}")
 
                         case ["4"]:
                             break
