@@ -22,18 +22,19 @@ def select_robot(robots):
 
 def main():
     robots = []
+    running = True
 
     print("---ROBOT WARS---")
     print("Welcome to Robot Wars, a simple game based robot battle, but much fun!\n")
     print("[1] start game")
     print("[2] end game\n")
 
-    while True:
+    while running:
         line = input(">")
 
         match line.split():
             case ["1"]:
-                while True:
+                while running:
                     print("\n[1] create robot")
                     print("[2] show robot")
                     print("[3] start battle")
@@ -80,13 +81,13 @@ def main():
                             print(f"The enemy is {enemy.name}")
 
                         case ["4"]:
-                            break
+                            running = False
 
                         case _:
                             print("Invalid command!\n")
 
             case ["2"]:
-                break
+                running = False
 
             case _:
                 print("Invalid command!\n")
