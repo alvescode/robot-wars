@@ -9,7 +9,7 @@ class Robot():
         return f"Name: {self.name}\nHP: {self.hp}\nAttack: {self.attack_power}\nShield: {self.shield}\n"
 
     def attack(self, enemy):
-        enemy.hp -= self.attack_power
+        enemy.hp -= self.attack_power - enemy.shield
 
 def select_robot(robots):
     print("\n---ROBOTS---")
@@ -58,7 +58,7 @@ def main():
                             )
 
                             robots.append(robot)
-                            print("")
+                            print(f"\n{user_name} was created\n")
                             
                         case ["2"]:
                             if len(robots) == 0:
@@ -86,6 +86,13 @@ def main():
                                 enemy = select_robot(robots)
 
                             print(f"\nThe enemy is {enemy.name}\n")
+
+                            print("---BATTLE---")
+                            print(f"{player.name}\nAttack: {player.attack_power}\n")
+                            print(f"{enemy.name}\nHP: {enemy.hp}\n")
+
+                            player.attack(enemy)
+                            print(f"{enemy.name} was attacked\nHP: {enemy.hp}\n")
 
                         case ["4"]:
                             running = False
