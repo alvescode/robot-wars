@@ -1,3 +1,4 @@
+import time
 import enum
 
 class State(enum.Enum):
@@ -14,16 +15,16 @@ class Robot():
     def __str__(self):
         return f"Name: {self.name}\nHP: {self.hp}\nAttack: {self.attack_power}\nShield: {self.shield}\n"
 
-    def attack(self, enemy) -> State:
-        if enemy.shield >= self.attack_power:
-            enemy.shield -= self.attack_power
+    def attack(self, target) -> State:
+        if target.shield >= self.attack_power:
+            target.shield -= self.attack_power
         else:
-            damage = self.attack_power - enemy.shield
-            enemy.shield = 0
-            enemy.hp -= damage
+            damage = self.attack_power - target.shield
+            target.shield = 0
+            target.hp -= damage
 
-        if enemy.hp <= 0:
-            enemy.hp = 0
+        if target.hp <= 0:
+            target.hp = 0
             return State.DEAD
         return State.OK
 
@@ -125,10 +126,21 @@ def main():
                                             print(f"\n{enemy.name} died\n")
                                             break
 
-                                        print(
-                                            f"\n{player.name} attack {enemy.name}\n\n"
-                                            f"{enemy.name} HP: {enemy.hp}\n{enemy.name} Shield: {enemy.shield}\n"
-                                        )
+                                        print(f"\n{player.name} attack {enemy.name}\n")
+                                        time.sleep(1)
+                                        print(f"{enemy.name} HP: {enemy.hp}\n{enemy.name} Shield: {enemy.shield}\n")
+                                        time.sleep(1)
+
+                                        state = enemy.attack(player)
+
+                                        if state == State.DEAD:
+                                            print(f"\n{enemy.name} died\n")
+                                            break
+
+                                        print(f"\n{enemy.name} attack {player.name}\n")
+                                        time.sleep(1)
+                                        print(f"{player.name} HP: {player.hp}\n{player.name} Shield: {player.shield}\n")
+                                        time.sleep(1)
 
                                     case ["2"]:
                                         print("\n---PLAYER STATUS---\n")
