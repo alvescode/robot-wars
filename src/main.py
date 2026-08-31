@@ -66,39 +66,39 @@ def main():
                                     user_hp = int(input("Write robot HP: "))
 
                                     if user_hp <= 0:
-                                        print("Invalid HP!")
+                                        print("Invalid HP!\n")
                                         continue
 
                                     break
 
                                 except ValueError:
-                                    print("Please enter a number!")
+                                    print("Please enter a number!\n")
 
                             while True:
                                 try:
                                     user_attack = int(input("Write robot attack: "))
 
                                     if user_attack <= 0:
-                                        print("Invalid attack!")
+                                        print("Invalid attack!\n")
                                         continue
 
                                     break
 
                                 except ValueError:
-                                    print("Please enter a number!")
+                                    print("Please enter a number!\n")
 
                             while True:
                                 try:
                                     user_shield = int(input("Write robot shield: "))
 
                                     if user_shield < 0:
-                                        print("Invalid shield!")
+                                        print("Invalid shield!\n")
                                         continue
 
                                     break
 
                                 except ValueError:
-                                    print("Please enter a number!")
+                                    print("Please enter a number!\n")
 
                             robot = Robot(
                                 user_name, 
@@ -155,7 +155,8 @@ def main():
 
                                         if state == State.DEAD:
                                             print(f"\n{enemy.name} died\n")
-                                            print(f"{player} win!")
+                                            time.sleep(1)
+                                            print(f"{player.name} win!\n")
                                             break
 
                                         print(f"\n{player.name} attack {enemy.name}\n")
@@ -167,7 +168,8 @@ def main():
 
                                         if state == State.DEAD:
                                             print(f"\n{player.name} died\n")
-                                            print(f"{enemy} win!")
+                                            time.sleep(1)
+                                            print(f"{enemy.name} win!\n")
                                             break
 
                                         print(f"\n{enemy.name} attack {player.name}\n")
