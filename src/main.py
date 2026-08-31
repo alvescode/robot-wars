@@ -1,3 +1,9 @@
+import enum
+
+class State(enum.Enum):
+    OK = "ok"
+    DEAD = "morto"
+
 class Robot():
     def __init__(self, name: str, hp: int, attack: int, shield: int):
         self.name = name
@@ -8,8 +14,12 @@ class Robot():
     def __str__(self):
         return f"Name: {self.name}\nHP: {self.hp}\nAttack: {self.attack_power}\nShield: {self.shield}\n"
 
-    def attack(self, enemy):
+    def attack(self, enemy) -> State:
         enemy.hp -= self.attack_power - enemy.shield
+        if enemy.hp <= 0:
+            enemy.hp = 0
+            return State.DEAD
+        return State.OK
 
 def select_robot(robots):
     print("\n---ROBOTS---")
@@ -37,7 +47,7 @@ def main():
             case ["1"]:
                 while running:
                     print("[1] create robot")
-                    print("[2] show robot")
+                    print("[2] show robots")
                     print("[3] start battle")
                     print("[4] end game\n")
 
@@ -87,12 +97,33 @@ def main():
 
                             print(f"\nThe enemy is {enemy.name}\n")
 
-                            print("---BATTLE---")
-                            print(f"{player.name}\nAttack: {player.attack_power}\n")
-                            print(f"{enemy.name}\nHP: {enemy.hp}\n")
+                            while True:
+                                print("---BATTLE---")
+                                print("[1] attack")
+                                print("[2] show status")
+                                print("[3] run\n")
 
-                            player.attack(enemy)
-                            print(f"{enemy.name} was attacked\nHP: {enemy.hp}\n")
+                                line = input(">")
+                                
+                                match line.split():
+                                    case ["1"]:
+                                        state = player.attack(enemy)
+
+                                        if state == State.DEAD:
+                                            print(f"{enemy.name} died")
+                                            break
+
+                                        print(f"{player.name} attack {enemy.name}\n{enemy.name} HP: {enemy.hp}\n")
+
+                                    case ["2"]:
+                                        print("---PLAYER STATUS---")
+                                        print(player)
+
+                                    case ["3"]:
+                                        break
+
+                                    case _:
+                                        print("Invalid command!\n")
 
                         case ["4"]:
                             running = False
