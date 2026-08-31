@@ -22,25 +22,25 @@ class Robot():
         return State.OK
 
 def select_robot(robots):
-    print("\n---ROBOTS---")
+    print("\n---ROBOTS---\n")
 
     for index, rob in enumerate(robots):
         print(f"[{index}] {rob.name}")
 
-    line = int(input(">"))
+    line = int(input("\n> "))
     return robots[line]
 
 def main():
     robots = []
     running = True
 
-    print("---ROBOT WARS---")
+    print("---ROBOT WARS---\n")
     print("Welcome to Robot Wars, a simple game based robot battle, but much fun!\n")
     print("[1] start game")
     print("[2] end game\n")
 
     while running:
-        line = input(">")
+        line = input("> ")
         print("")
 
         match line.split():
@@ -51,10 +51,12 @@ def main():
                     print("[3] start battle")
                     print("[4] end game\n")
 
-                    line = input(">")
+                    line = input("> ")
 
                     match line.split():
                         case ["1"]:
+                            print("\n---CREATE ROBOT---\n")
+
                             user_name = input("Write robot name: ")
                             user_hp = int(input("Write robot HP: "))
                             user_attack = int(input("Write robot attack: "))
@@ -74,7 +76,8 @@ def main():
                             if len(robots) == 0:
                                 print("\nDon't exist robot created!\n")
                             else:
-                                print("\n---ROBOTS---")
+                                print("\n---ROBOTS---\n")
+
                                 for rob in robots:
                                     print(rob)
 
@@ -83,58 +86,65 @@ def main():
                                 print("\nYou need at least 2 robots to battle\n")
                                 continue
 
-                            print("\nSelect your robot: ")
-                            player = select_robot(robots)
-                            print(f"\nYou select {player.name}")
+                            print("---SELECT YOUR ROBOT---\n")
 
-                            print("\nSelect your enemy: ")
+                            player = select_robot(robots)
+                            print(f"\nYou select {player.name}\n")
+
+                            print("---SELECT YOUR ENEMY---\n")
+
                             enemy = select_robot(robots)
 
                             while player == enemy:
-                                print("\nYou can't select you player, please select other robot")
-                                print("\nSelect your enemy: ")
+                                print("\nYou can't select you player, please select other robot\n")
+                                print("---SELECT YOUR ENEMY---\n")
+
                                 enemy = select_robot(robots)
 
                             print(f"\nThe enemy is {enemy.name}\n")
 
                             while True:
-                                print("---BATTLE---")
+                                print("---BATTLE---\n")
                                 print("[1] attack")
                                 print("[2] show status")
                                 print("[3] run\n")
 
-                                line = input(">")
+                                line = input("> ")
                                 
                                 match line.split():
                                     case ["1"]:
                                         state = player.attack(enemy)
 
                                         if state == State.DEAD:
-                                            print(f"{enemy.name} died")
+                                            print(f"\n{enemy.name} died\n")
                                             break
 
-                                        print(f"{player.name} attack {enemy.name}\n{enemy.name} HP: {enemy.hp}\n")
+                                        print(
+                                            f"\n{player.name} attack {enemy.name}\n"
+                                            f"{enemy.name} HP: {enemy.hp}\n"
+                                        )
 
                                     case ["2"]:
-                                        print("---PLAYER STATUS---")
+                                        print("\n---PLAYER STATUS---\n")
                                         print(player)
 
                                     case ["3"]:
+                                        print("\n")
                                         break
 
                                     case _:
-                                        print("Invalid command!\n")
+                                        print("\nInvalid command!\n")
 
                         case ["4"]:
                             running = False
 
                         case _:
-                            print("Invalid command!\n")
+                            print("\nInvalid command!\n")
 
             case ["2"]:
                 running = False
 
             case _:
-                print("Invalid command!\n")
+                print("\nInvalid command!\n")
 
 main()
