@@ -15,14 +15,20 @@ class Robot():
         return f"Name: {self.name}\nHP: {self.hp}\nAttack: {self.attack_power}\nShield: {self.shield}\n"
 
     def attack(self, enemy) -> State:
-        enemy.hp -= self.attack_power - enemy.shield
+        if enemy.shield >= self.attack_power:
+            enemy.shield -= self.attack_power
+        else:
+            damage = self.attack_power - enemy.shield
+            enemy.shield = 0
+            enemy.hp -= damage
+
         if enemy.hp <= 0:
             enemy.hp = 0
             return State.DEAD
         return State.OK
 
 def select_robot(robots):
-    print("\n---ROBOTS---\n")
+    print("---ROBOTS---\n")
 
     for index, rob in enumerate(robots):
         print(f"[{index}] {rob.name}")
@@ -86,7 +92,7 @@ def main():
                                 print("\nYou need at least 2 robots to battle\n")
                                 continue
 
-                            print("---SELECT YOUR ROBOT---\n")
+                            print("\n---SELECT YOUR ROBOT---\n")
 
                             player = select_robot(robots)
                             print(f"\nYou select {player.name}\n")
@@ -120,8 +126,8 @@ def main():
                                             break
 
                                         print(
-                                            f"\n{player.name} attack {enemy.name}\n"
-                                            f"{enemy.name} HP: {enemy.hp}\n"
+                                            f"\n{player.name} attack {enemy.name}\n\n"
+                                            f"{enemy.name} HP: {enemy.hp}\n{enemy.name} Shield: {enemy.shield}\n"
                                         )
 
                                     case ["2"]:
@@ -133,18 +139,18 @@ def main():
                                         break
 
                                     case _:
-                                        print("\nInvalid command!\n")
+                                        print("Invalid command!\n")
 
                         case ["4"]:
                             running = False
 
                         case _:
-                            print("\nInvalid command!\n")
+                            print("Invalid command!\n")
 
             case ["2"]:
                 running = False
 
             case _:
-                print("\nInvalid command!\n")
+                print("Invalid command!\n")
 
 main()
