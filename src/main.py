@@ -32,10 +32,27 @@ def select_robot(robots):
     print("---ROBOTS---\n")
 
     for index, rob in enumerate(robots):
-        print(f"[{index}] {rob.name}")
+        if rob.hp > 0:
+            print(f"[{index}] {rob.name}")
 
-    line = int(input("\n> "))
-    return robots[line]
+    while True:
+        try:
+            line = int(input("\n> "))
+
+            if line < 0 or line >= len(robots):
+                print("Invalid robot!")
+                continue
+
+            robot = robots[line]
+
+            if robot.hp <= 0:
+                print("This robot is dead!")
+                continue
+
+            return robot
+
+        except ValueError:
+            print("Please enter a number!")
 
 def main():
     robots = []
@@ -65,9 +82,48 @@ def main():
                             print("\n---CREATE ROBOT---\n")
 
                             user_name = input("Write robot name: ")
-                            user_hp = int(input("Write robot HP: "))
-                            user_attack = int(input("Write robot attack: "))
-                            user_shield = int(input("Write robot shield: "))
+                            while user_name == "":
+                                print("Invalid name!")
+                                user_name = input("Write robot name: ")
+
+                            while True:
+                                try:
+                                    user_hp = int(input("Write robot HP: "))
+
+                                    if user_hp <= 0:
+                                        print("Invalid HP!")
+                                        continue
+
+                                    break
+
+                                except ValueError:
+                                    print("Please enter a number!")
+
+                            while True:
+                                try:
+                                    user_attack = int(input("Write robot attack: "))
+
+                                    if user_attack <= 0:
+                                        print("Invalid attack!")
+                                        continue
+
+                                    break
+
+                                except ValueError:
+                                    print("Please enter a number!")
+
+                            while True:
+                                try:
+                                    user_shield = int(input("Write robot shield: "))
+
+                                    if user_shield < 0:
+                                        print("Invalid shield!")
+                                        continue
+
+                                    break
+
+                                except ValueError:
+                                    print("Please enter a number!")
 
                             robot = Robot(
                                 user_name, 
@@ -124,6 +180,7 @@ def main():
 
                                         if state == State.DEAD:
                                             print(f"\n{enemy.name} died\n")
+                                            print(f"{player} win!")
                                             break
 
                                         print(f"\n{player.name} attack {enemy.name}\n")
@@ -134,7 +191,8 @@ def main():
                                         state = enemy.attack(player)
 
                                         if state == State.DEAD:
-                                            print(f"\n{enemy.name} died\n")
+                                            print(f"\n{player.name} died\n")
+                                            print(f"{enemy} win!")
                                             break
 
                                         print(f"\n{enemy.name} attack {player.name}\n")
